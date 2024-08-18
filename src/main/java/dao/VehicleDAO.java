@@ -2,11 +2,17 @@ package dao;
 
 import vehicle.Vehicle;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class VehicleDAO {
     private List<Vehicle> listVehicleInDB;
+
+    public VehicleDAO() {
+        this.listVehicleInDB = new ArrayList<>();
+    }
+
     public CompletableFuture<Void> addVehicleToDB(List<Vehicle> listVeh) {
         listVehicleInDB.addAll(listVeh);
         return CompletableFuture.completedFuture(null);

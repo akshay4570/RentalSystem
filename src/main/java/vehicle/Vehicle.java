@@ -1,10 +1,20 @@
 package vehicle;
 
+import rental.RentalDetails;
+import rental.RentalFactory;
+
 public abstract class Vehicle {
     private VehicleRegistrationDetails vehicleRegistrationDetails;
     private VehicleSpecs vehicleSpecs;
     private RentalDetails rentalDetails;
     private Status status;
+
+    public Vehicle(VehicleRegistrationDetails vehicleRegistrationDetails, VehicleSpecs vehicleSpecs, Status status) {
+        this.vehicleRegistrationDetails = vehicleRegistrationDetails;
+        this.vehicleSpecs = vehicleSpecs;
+        this.rentalDetails = RentalFactory.getRentalDetails(this);
+        this.status = status;
+    }
 
     public VehicleRegistrationDetails getVehicleRegistrationDetails() {
         return vehicleRegistrationDetails;

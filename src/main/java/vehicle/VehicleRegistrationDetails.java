@@ -1,6 +1,7 @@
 package vehicle;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class VehicleRegistrationDetails {
 
@@ -10,6 +11,15 @@ public class VehicleRegistrationDetails {
     private String colour;
     private String vehicleOwner;
     private Date dateOfRegistration;
+
+    public VehicleRegistrationDetails(String modelName, String colour, String vehicleOwner) {
+        this.chassisNo = UUID.randomUUID().toString();
+        this.regNo = UUID.randomUUID().toString();
+        this.modelName = modelName;
+        this.colour = colour;
+        this.vehicleOwner = vehicleOwner;
+        this.dateOfRegistration = new Date();
+    }
 
     public String getChassisNo() {
         return chassisNo;

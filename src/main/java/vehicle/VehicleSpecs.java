@@ -1,5 +1,7 @@
 package vehicle;
 
+import java.util.Date;
+
 public class VehicleSpecs {
 
     private Double mileage;
@@ -7,6 +9,14 @@ public class VehicleSpecs {
     private int numOfCylinders;
     private long lastPollutionCheck;
     private long lastService;
+
+    public VehicleSpecs(Double mileage, Double cc, int numOfCylinders) {
+        this.mileage = mileage;
+        this.cc = cc;
+        this.numOfCylinders = numOfCylinders;
+        this.lastPollutionCheck = 100;
+        this.lastService = 50;
+    }
 
     public Double getMileage() {
         return mileage;

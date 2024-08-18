@@ -16,12 +16,13 @@ public class Reservation {
     private Date dateReturned;
     private ReservationStatus reservationStatus;
 
-    public Reservation(Vehicle vehicle, User user, Date dateReserved, Date datePickUp) {
+    public Reservation(Vehicle vehicle, User user, Date dateReserved, Date datePickUp, Date dateReturned) {
         this.id = UUID.randomUUID().toString();
         this.vehicle = vehicle;
         this.user = user;
         this.dateReserved = dateReserved;
         this.datePickUp = datePickUp;
+        this.dateReturned = dateReturned;
     }
 
     public String getId() {
@@ -50,14 +51,6 @@ public class Reservation {
 
     public ReservationStatus getReservationStatus() {
         return reservationStatus;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setDateReturned(Date dateReturned) {
-        this.dateReturned = dateReturned;
     }
 
     public void setReservationStatus(ReservationStatus reservationStatus) {
