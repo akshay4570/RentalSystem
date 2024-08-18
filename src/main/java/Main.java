@@ -1,5 +1,6 @@
 import com.github.javafaker.Faker;
 import dao.VehicleDAO;
+import data.DataSetup;
 import invoice.Invoice;
 import location.City;
 import payment.Payment;
@@ -25,12 +26,11 @@ public class Main {
         try {
             //Setup Vehicle DB Connection
             VehicleDAO vehicleDAO = new VehicleDAO();
-            List<User> listUsers = setUpUsers();
-            List<Vehicle> listVehicle = setUpVehicles();
-            List<City> listCities = setUpCity();
-            VehicleInventoryMgmt vehicleInventoryMgmt = new VehicleInventoryMgmt(vehicleDAO);
-            vehicleInventoryMgmt.addVehicles(listVehicle);
-            List<RentalStore> listRentalStore = setUpStore(vehicleInventoryMgmt, listCities);
+            List<User> listUsers = DataSetup.setUpUsers();
+            List<Vehicle> listVehicle = DataSetup.setUpVehicles();
+            List<City> listCities = DataSetup.setUpCity();
+            List<VehicleInventoryMgmt> listVehicleMgmt = DataSetup.setupVehicleInventory(vehicleDAO, listVehicle);
+            List<RentalStore> listRentalStore = DataSetup.setUpStore(listVehicleMgmt, listCities);
 
             VehicleRentalSystem vehicleRentalSystem = VehicleRentalSystem.getInstance();
             vehicleRentalSystem.init(listUsers, listRentalStore);
@@ -63,43 +63,7 @@ public class Main {
             System.out.println("Exception "+e.getMessage());
             System.out.println(Arrays.toString(Arrays.stream(e.getStackTrace()).toArray()));
         }
-
-//        VehicleRentalSystem vehicleRentalSystem = new VehicleRentalSystem(listUsers, )
-    }
-
-    private static List<RentalStore> setUpStore(VehicleInventoryMgmt vehicleInventoryMgmt, List<City> listCities) {
-        List<RentalStore> listRentalStore = new ArrayList<>();
-        for(int i=0;i<10;i++){
-            listRentalStore.add(new RentalStore(vehicleInventoryMgmt, listCities.get(i)));
-        }
-        return listRentalStore;
-    }
-
-    private static List<City> setUpCity() {
-        List<City> listCity = new ArrayList<>();
-        Faker faker = new Faker();
-        for (int i = 0; i < 20; i++) {
-            listCity.add(new City(faker.address().cityName(), faker.address().streetAddress(), faker.address().zipCode()));
-        }
-        return listCity;
     }
 
 
-    private static List<Vehicle> setUpVehicles() {
-        List<Vehicle> listVehicle = new ArrayList<>();
-        listVehicle.add(new Bike(new VehicleRegistrationDetails("Yamaha", "blue", "Ram"), new VehicleSpecs(45.0, 150.0, 2), Status.ACTIVE));
-        listVehicle.add(new Bike(new VehicleRegistrationDetails("BMW", "black", "Shyam"), new VehicleSpecs(20.0, 350.0, 4), Status.ACTIVE));
-        listVehicle.add(new Car(new VehicleRegistrationDetails("Benz", "red", "Pape"), new VehicleSpecs(10.0, 1500.0, 8), Status.ACTIVE));
-        listVehicle.add(new Car(new VehicleRegistrationDetails("Bugatti", "blue", "Amar"), new VehicleSpecs(4.0, 2050.0, 10), Status.INACTIVE));
-        return listVehicle;
-    }
-
-    private static List<User> setUpUsers() {
-        List<User> listUsers = new ArrayList<>();
-        Faker faker = new Faker();
-        for(int i=0;i<100;i++){
-            listUsers.add(new User(faker.name().firstName(), faker.business().creditCardNumber(), faker.business().creditCardNumber()));
-        }
-        return listUsers;
-    }
 }
